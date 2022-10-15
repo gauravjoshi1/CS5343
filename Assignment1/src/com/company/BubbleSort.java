@@ -82,7 +82,7 @@ public class BubbleSort {
         Node curr = new Node(2);
 
         // build an array of linked list values
-        int[] arr = new int[]{8, 5, 3, 9, 4, 1};
+        int[] arr = new int[]{8, 5, 3, 9, 4, 1, 15, 14, 12, 11, 10, 6, 16, 7, 13, 19};
 
         // add the values to the head of the linked list
         curr.buildLinkedList(curr, arr);
@@ -93,7 +93,7 @@ public class BubbleSort {
 
         BubbleSort sortLL = new BubbleSort();
         Node updated = sortLL.bubbleSortLinkedList(curr);
-        System.out.println("LinkedList after sorting: ");
+        System.out.println("\nLinkedList after sorting: ");
         updated.printLinkedList();
     }
 }
