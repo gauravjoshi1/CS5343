@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Graph {
     private final Map<String, List<String>> adjacentVertices;
-    private Map<String, Integer> indegree;
+    private final Map<String, Integer> indegree;
     private final Map<String, Integer> ordering;
     private final Set<String> visitedNodes;
     private final Queue<String> indegreeQueue;
@@ -67,16 +67,13 @@ public class Graph {
         System.out.println(ordering);
     }
 
-    void dfsTopologicalSortRunner(String naturalStartingVertex) {
+    void dfsTopologicalSortRunner() {
         int length = currentLength;
 
         // fill default ordering with -1
         for (String vertex : adjacentVertices.keySet()) {
             ordering.put(vertex, -1);
         }
-
-        // run the first traversal from the natural starting vertex
-        dfsTopologicalSort(naturalStartingVertex);
 
         // run dfs for each of the unexplored vertices
         for (String vertex : adjacentVertices.keySet()) {
@@ -103,60 +100,6 @@ public class Graph {
 
         ordering.put(root, currentLength--);
     }
-
-//    void dfsTopologicalSortRunner() {
-//        Set<String> visitedNodes = new HashSet<>();
-//        Map<String, Integer> refIndegree = new HashMap<>(indegree);
-//        int length = currentLength;
-//
-//        // default ordering
-//        for (String vertex : indegree.keySet()) {
-//            ordering.put(vertex, -1);
-//        }
-//
-//        for (String vertex : indegree.keySet()) {
-//            if (indegree.get(vertex) == 0) {
-//                indegreeStack.add(vertex);
-//            }
-//        }
-//
-//        while (!indegreeStack.isEmpty()) {
-//            String vertex = indegreeStack.pop();
-//            if (!visitedNodes.contains(vertex)) {
-//                dfsTopologicalSort(visitedNodes, vertex);
-//            }
-//        }
-//
-//        currentLength = length;
-//        indegree = refIndegree;
-//
-//        printOrdering();
-//    }
-//
-//    void dfsTopologicalSort(Set<String> visitedNodes, String root) {
-//        visitedNodes.add(root);
-//
-//        List<String> edgesFromNode = getAdjacentVertices(root);
-//
-//        for (String vertex: edgesFromNode) {
-//
-//            if (visitedNodes.contains(vertex) && ordering.get(vertex) == -1) {
-//                return;
-//            }
-//
-//            if (!visitedNodes.contains(vertex)) {
-//                indegree.put(vertex, indegree.get(vertex) - 1);
-//                if (indegree.get(vertex) == 0) {
-//                    indegreeStack.add(vertex);
-//                }
-//
-//                dfsTopologicalSort(visitedNodes, vertex);
-//            }
-//        }
-//
-//        ordering.put(root, currentLength--);
-//
-//    }
 
     public void bfsTopologicalSortRunner() {
         int bfsOrdering = 1;
