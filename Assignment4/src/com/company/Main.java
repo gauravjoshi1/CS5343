@@ -19,6 +19,7 @@ public class Main {
     public static void main(String[] args) {
         Graph g1 = new Graph();
         Graph g2 = new Graph();
+        Graph g3 = new Graph();
 
         Main main = new Main();
 
@@ -36,12 +37,11 @@ public class Main {
          */
 
         // run sorting algorithms
-        System.out.print("DFS Topological Sort: ");
         g1.dfsTopologicalSortRunner();
-        System.out.print("BFS Topological Sort: ");
+        System.out.println(" ");
         g1.bfsTopologicalSortRunner();
 
-        System.out.println("\n");
+        System.out.println("\n-------\n");
 
         // example 2:
         String[] v2 = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
@@ -49,9 +49,26 @@ public class Main {
 
         main.buildGraph(g2, v2, e2);
 
-        System.out.print("DFS Topological Sort: ");
         g2.dfsTopologicalSortRunner();
-        System.out.print("BFS Topological Sort: ");
+        System.out.println(" ");
         g2.bfsTopologicalSortRunner();
+
+        System.out.println("\n-------\n");
+
+        String[] v3 = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String[][] e3 = new String[][]{{"0", "1"}, {"0", "5"}, {"1", "2"}, {"1", "3"}, {"1", "5"}, {"2", "4"}, {"4", "3"},
+                {"5", "6"}, {"6", "8"}, {"7", "3"}, {"7", "8"}, {"8", "10"}, {"9", "7"}, {"9", "10"}};
+
+        main.buildGraph(g3, v3, e3);
+
+        g3.dfsTopologicalSortRunner();
+        System.out.println(" ");
+        g3.bfsTopologicalSortRunner();
+
+
+
+
+
+
     }
 }

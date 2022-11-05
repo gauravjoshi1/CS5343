@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Graph {
     private final Map<String, List<String>> adjacentVertices;
@@ -8,12 +9,12 @@ public class Graph {
     private final Map<String, Integer> ordering;
     private final Set<String> visitedNodes;
     private final Queue<String> indegreeQueue;
-    public int currentLength = 0;
+    private int currentLength = 0;
 
     Graph() {
         this.adjacentVertices = new HashMap<>();
         this.indegree = new HashMap<>();
-        this.ordering = new HashMap<>();
+        this.ordering = new LinkedHashMap<>();
         this.visitedNodes = new HashSet<>();
         this.indegreeQueue = new LinkedList<>();
     }
@@ -56,15 +57,11 @@ public class Graph {
         System.out.println(adjacentVertices);
     }
 
-    void printOrdering() {
-        for (String vertex : ordering.keySet()) {
-            if (ordering.get(vertex) == -1) {
-                System.out.println("Cycle detected");
-                return;
-            }
-        }
-
-        System.out.println(ordering);
+    void printTopologicalOrdering() {
+        System.out.println(ordering.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList()));
     }
 
     void dfsTopologicalSortRunner() {
@@ -81,7 +78,20 @@ public class Graph {
         }
 
         currentLength = length;
-        printOrdering();
+
+        // detect if there is any cycle
+        for (String vertex : ordering.keySet()) {
+            if (ordering.get(vertex) == -1) {
+                System.out.println("Cycle detected in DFS Topological Sort");
+                return;
+            }
+        }
+
+        // print results
+        System.out.print("DFS Topological Ordering with vertices: ");
+        System.out.println(ordering);
+        System.out.print("DFS Topological Ordering: ");
+        printTopologicalOrdering();
     }
 
     void dfsTopologicalSort(String root) {
@@ -118,13 +128,16 @@ public class Graph {
 
         for (String vertex : indegree.keySet()) {
             if (indegree.get(vertex) > 0) {
-                System.out.println("Cycle Detected");
+                System.out.println("Cycle Detected in BFS Topological Sort");
                 return;
             }
         }
 
-        printOrdering();
+        System.out.print("BFS Topological Ordering with vertices: ");
+        System.out.println(ordering);
+        System.out.print("BFS Topological Ordering: ");
 
+        printTopologicalOrdering();
     }
 
     void bfsTopologicalSort(String root, int bfsOrdering) {
