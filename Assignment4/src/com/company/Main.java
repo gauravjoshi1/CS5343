@@ -54,21 +54,5 @@ public class Main {
         g2.bfsTopologicalSortRunner();
 
         System.out.println("\n-------\n");
-
-        String[] v3 = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-        String[][] e3 = new String[][]{{"0", "1"}, {"0", "5"}, {"1", "2"}, {"1", "3"}, {"1", "5"}, {"2", "4"}, {"4", "3"},
-                {"5", "6"}, {"6", "8"}, {"7", "3"}, {"7", "8"}, {"8", "10"}, {"9", "7"}, {"9", "10"}};
-
-        main.buildGraph(g3, v3, e3);
-
-        g3.dfsTopologicalSortRunner();
-        System.out.println(" ");
-        g3.bfsTopologicalSortRunner();
-
-
-
-
-
-
     }
 }
