@@ -12,11 +12,11 @@ public class WeightedGraph {
     }
     private final Map<String, List<Pair>> adjacentVertices;
     private final Set<String> visited = new HashSet<>();
-    private final Map<String, Integer> costMap;
+    private final Map<String, Pair> shortestCostMap;
 
     public WeightedGraph() {
         this.adjacentVertices = new LinkedHashMap<>();
-        costMap = new HashMap<>();
+        this.shortestCostMap = new HashMap<>();
     }
 
     void addEdge(String firstVertex, String secondVertex, Integer edgeWeight) {
@@ -33,23 +33,31 @@ public class WeightedGraph {
     void printAdjVertices() {
         for (String vertex : adjacentVertices.keySet()) {
             List<Pair> edgeWeightPairList = adjacentVertices.get(vertex);
-
+            System.out.print(vertex + ": ");
             for (Pair edgeWeightPair : edgeWeightPairList) {
-                System.out.println(vertex + " " + edgeWeightPair.vertex + " " +edgeWeightPair.edgeWeight);
+                System.out.print("(" + edgeWeightPair.vertex + ", " + edgeWeightPair.edgeWeight + ")" + " ");
             }
+
+            System.out.println();
+        }
+    }
+
+    private void setShortestPathTree(String startVertex) {
+        for (String vertices : adjacentVertices.keySet()) {
+            if (vertices.equals(startVertex)) {
+                shortestCostMap.put(startVertex, new Pair(startVertex, 0));
+                continue;
+            }
+
+            shortestCostMap.put(vertices, null);
         }
     }
 
     // Dijkstra's algorithm
     void dijkstraRunner(String startVertex) {
-        for (String vertices : adjacentVertices.keySet()) {
-            if (vertices.equals(startVertex)) {
-                costMap.put(startVertex, 0);
-                continue;
-            }
 
-            costMap.put(vertices, null);
-        }
+        // initalize shortest path tree from start vertex
+        setShortestPathTree(startVertex);
 
         PriorityQueue<Pair> nodes = new PriorityQueue<>(Comparator.comparingInt(a -> a.edgeWeight));
 
@@ -66,8 +74,8 @@ public class WeightedGraph {
 
                 if (visited.contains(vertex)) continue;
 
-                if (costMap.get(vertex) == null || costMap.get(vertex) > edgeWeight + node.edgeWeight) {
-                    costMap.put(vertex, edgeWeight + node.edgeWeight);
+                if (shortestCostMap.get(vertex) == null || shortestCostMap.get(vertex).edgeWeight > edgeWeight + node.edgeWeight) {
+                    shortestCostMap.put(vertex, new Pair(node.vertex, edgeWeight + node.edgeWeight));
                     nodes.add(new Pair(vertex, edgeWeight + node.edgeWeight));
                 }
             }
@@ -75,6 +83,8 @@ public class WeightedGraph {
             visited.add(node.vertex);
         }
 
-        System.out.println(costMap);
+        for (String vertexKey : shortestCostMap.keySet()) {
+            System.out.println("edge == " +"(" + shortestCostMap.get(vertexKey).vertex + ", " + vertexKey + ")" +  ", edgeWeight == " + shortestCostMap.get(vertexKey).edgeWeight);
+        }
     }
 }

@@ -20,10 +20,11 @@ public class Main {
         WeightedGraph wg = new WeightedGraph();
         Main main = new Main();
 
-        String[] v1 = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8"};
+        String[] v1 = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         String[][] weightedEdges = new String[][]{
                 {"0", "1", "4"},
                 {"0", "6", "7"},
+                {"0", "9", "14"},
                 {"1", "6", "11"},
                 {"1", "7", "20"},
                 {"1", "2", "9"},
@@ -36,10 +37,18 @@ public class Main {
                 {"4", "8", "5"},
                 {"5", "8", "12"},
                 {"6", "7", "1"},
-                {"7", "8", "3"}
+                {"6", "9", "4"},
+                {"6", "10", "8"},
+                {"7", "8", "3"},
+                {"7", "10", "5"},
+                {"8", "10", "6"},
+                {"9", "10", "11"}
         };
 
         main.buildGraph(wg, v1, weightedEdges);
+        wg.printAdjVertices();
+
+        System.out.println("\n------------\n");
         wg.dijkstraRunner("0");
     }
 }
